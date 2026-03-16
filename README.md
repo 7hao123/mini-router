@@ -1,52 +1,20 @@
-# Vue3 + Vite + Vue Router 项目
+## 路由的模式
+- 前端路由的特点是根据不同的url，渲染不同的组件
+- hash(#) history(HTML5)
+- hash无法做ssr,history可以做ssr (hash是前端的锚点，不会发送给后端)  history会向后端发送请求的（所以要后端配置，可以做seo优化）
 
-这是一个使用 Vite 构建的 Vue3 项目，集成了 Vue Router。
+- hash页面不会出现404  缺点丑，无法seo,优点兼容性好，监听hashChange
 
-## 技术栈
 
-- Vue 3
-- Vue Router 4
-- Vite 5
-- JavaScript
+- history
+- history.pushState(state, title, url);
+- 优点：好看，用起来方便，js直接操作路由
+- 刷新的话会向后端发请求，如果后端没有配置，会404
+虽然用户访问的可能是 www.baidu.com/about -> 返回的还是首页的内容（找到/about渲染）
 
-## 开发指南
 
-### 安装依赖
 
-```bash
-npm install
-```
-
-### 启动开发服务器
-
-```bash
-npm run dev
-```
-
-### 构建生产版本
-
-```bash
-npm run build
-```
-
-### 预览生产构建
-
-```bash
-npm run preview
-```
-
-## 项目结构
-
-```
-mini-router/
-├── public/              # 静态资源
-├── src/
-│   ├── router/         # 路由配置
-│   ├── views/          # 页面组件
-│   ├── App.vue         # 根组件
-│   ├── main.js         # 入口文件
-│   └── style.css       # 全局样式
-├── index.html          # HTML 入口
-├── vite.config.js      # Vite 配置
-└── package.json        # 项目配置
-```
+- hash模式如何实现路由的跳转和监控   window.location.hash   window.onhashChange
+- history如何实现路由的监控和跳转 history.pushState  history.replaceState  history.popState()
+- window.addEventListener('popstate',()=>console.log(location.pathname))
+- 由于history的监听也能监听到hash变化，所以router底层都用history api

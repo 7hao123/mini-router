@@ -7,13 +7,13 @@
     <main>
       <router-view />
     </main>
+    {{ location }}
   </div>
 </template>
 
-<script>
-export default {
-  name: 'App'
-}
+<script setup>
+import { inject } from "vue";
+const location = inject("location");
 </script>
 
 <style scoped>

@@ -15,7 +15,7 @@ export const RouterLink = {
       event.preventDefault();
       router.push(props.to);
     }
-
+    // 接收一个props是to,改造成a标签，阻止浏览器默认跳转
     return () =>
       h(
         "a",

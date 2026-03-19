@@ -9,7 +9,9 @@ const START_LOCATION = {
 
 export function createRouter(options) {
   const { history, routes } = options;
+  //   resolve将url和组件对照起来
   const matcher = createRouterMatcher(routes);
+  //   shallowRef只用来整体替换
   const currentLocation = shallowRef(START_LOCATION);
   let ready;
 
@@ -51,6 +53,7 @@ export function createRouter(options) {
       history.push(to.path);
     }
     currentLocation.value = to;
+    // 第一次的时候要挂在监听器，来同步currentLocation
     markReady();
   }
 
@@ -67,7 +70,7 @@ export function createRouter(options) {
   }
 
   if (currentLocation.value === START_LOCATION) {
-    // 说明这是第一次加载路由
+    // 说明这是第一次加载路由，要看当前浏览器的地址，然后进行路由跳转
     push(history.location);
   }
 
@@ -75,6 +78,7 @@ export function createRouter(options) {
     push,
     install(app) {
       const reactiveObj = {};
+      //   让provide的location变成响应式，并且可以解构
       for (const key in START_LOCATION) {
         reactiveObj[key] = computed(() => currentLocation.value[key]);
       }
